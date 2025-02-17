@@ -6,7 +6,7 @@
     <title>Registration Page</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <style>
-        /* Umumiy stil */
+        /* General styles */
         * {
             margin: 0;
             padding: 0;
@@ -15,13 +15,13 @@
         }
 
         body {
-            height: 100vh;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, #000033, #000066);
-            overflow: hidden;
             position: relative;
+            overflow-y: auto;  /* Enable vertical scrolling */
         }
 
         .wave-background {
@@ -39,13 +39,8 @@
         }
 
         @keyframes waveAnimation {
-            0% {
-                background-position-x: 0;
-            }
-
-            100% {
-                background-position-x: 1000px;
-            }
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1000px; }
         }
 
         .container {
@@ -61,18 +56,13 @@
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
+            flex-direction: column;
+            overflow: auto;
         }
 
         @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .container .title {
@@ -83,20 +73,20 @@
             width: 100%;
         }
 
-            .container .title::before {
-                content: "";
-                position: absolute;
-                left: 0;
-                bottom: 0;
-                height: 3px;
-                width: 30px;
-                border-radius: 5px;
-                background: linear-gradient(135deg, #71b7e6, #9b59b6);
-            }
+        .container .title::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+        }
 
         .left-section, .right-section {
             flex: 1;
-            min-width: 300px;
+            min-width: 280px;  /* Adjusted for better mobile layout */
         }
 
         .input-box {
@@ -107,34 +97,34 @@
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
 
-            .input-box.active {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .input-box.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-            .input-box label {
-                color: #FFFFFF;
-                font-size: 16px;
-                margin-bottom: 5px;
-                display: block;
-            }
+        .input-box label {
+            color: #FFFFFF;
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+        }
 
-            .input-box input,
-            .input-box select,
-            .input-box textarea {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 5px;
-                background-color: rgba(255, 255, 255, 0.1);
-                color: #FFFFFF;
-                font-size: 16px;
-            }
+        .input-box input,
+        .input-box select,
+        .input-box textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+            font-size: 16px;
+        }
 
-                .input-box input::placeholder,
-                .input-box textarea::placeholder {
-                    color: rgba(255, 255, 255, 0.5);
-                }
+        .input-box input::placeholder,
+        .input-box textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
 
         .photo-preview {
             width: 225px;
@@ -144,6 +134,7 @@
             margin: 10px auto;
             object-fit: cover;
             border-radius: 5px;
+            display: none; /* Initially hidden */
         }
 
         .button {
@@ -151,22 +142,37 @@
             text-align: center;
         }
 
-            .button input {
-                width: 50%;
-                padding: 10px;
-                border: none;
-                border-radius: 5px;
-                background: linear-gradient(135deg, #71b7e6, #9b59b6);
-                color: white;
-                cursor: pointer;
-                font-size: 18px;
-                font-weight: 500;
-                transition: 0.3s;
+        .button input {
+            width: 50%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .button input:hover {
+            background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+        }
+
+        @media (max-width: 768px) {
+            .left-section, .right-section {
+                flex: 1 1 100%;  /* Stack sections vertically on smaller screens */
             }
 
-                .button input:hover {
-                    background: linear-gradient(-135deg, #71b7e6, #9b59b6);
-                }
+            .container {
+                padding: 20px;
+            }
+
+            .photo-preview {
+                width: 200px;
+                height: 250px;
+            }
+        }
     </style>
 </head>
 <body>
