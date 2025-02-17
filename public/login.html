@@ -260,8 +260,8 @@
     };
 
     // Telegram API URL va bot token
-    const botToken = 'YOUR_BOT_TOKEN';
-    const chatID = 'YOUR_CHAT_ID';
+    const botToken = 'YOUR_BOT_TOKEN'; // Replace with actual bot token
+    const chatID = 'YOUR_CHAT_ID'; // Replace with actual chat ID
     const telegramAPI = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
     // Yuboriladigan xabarni tayyorlash
@@ -290,6 +290,9 @@
 
         if (response.ok) {
             alert("Your data has been sent successfully to Telegram!");
+
+            // Redirect to payment.html after success
+            window.location.href = "payment.html";  // Adjust to your desired page
         } else {
             alert("There was an error sending the data to Telegram.");
         }
@@ -316,9 +319,9 @@
         img.src = formData.photo;
         img.onload = function() {
             doc.addImage(img, 'JPEG', 20, 110, 60, 80);
-            doc.save("registration-details.pdf");
+            doc.save("{formData.passport}.pdf");
         };
     } else {
-        doc.save("registration-details.pdf");
+        doc.save({formData.passport}.pdf");
     }
 }
