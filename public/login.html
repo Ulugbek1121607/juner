@@ -244,84 +244,87 @@
 
         // Form submit handler
         async function submitForm(event) {
-    event.preventDefault();
+            event.preventDefault();
 
-    // Form ma'lumotlarini to'plash
-    const formData = {
-        name: document.getElementById("name").value,
-        surname: document.getElementById("surname").value,
-        familyName: document.getElementById("familyName").value,
-        passport: document.getElementById("passport").value,
-        phone: document.getElementById("phone").value,
-        region: document.getElementById("region").value,
-        examDate: document.getElementById("examDate").value,
-        details: document.getElementById("details").value,
-        photo: document.getElementById("photoPreview").src
-    };
+            // Form ma'lumotlarini to'plash
+            const formData = {
+                name: document.getElementById("name").value,
+                surname: document.getElementById("surname").value,
+                familyName: document.getElementById("familyName").value,
+                passport: document.getElementById("passport").value,
+                phone: document.getElementById("phone").value,
+                region: document.getElementById("region").value,
+                examDate: document.getElementById("examDate").value,
+                details: document.getElementById("details").value,
+                photo: document.getElementById("photoPreview").src
+            };
 
-    // Telegram API URL va bot token
-    const botToken = '7689971716:AAEbnYS5N70XCfVBRZLw-Hns3ge7mSyWTvw'; // Replace with actual bot token
-    const chatID = '7273776529'; // Replace with actual chat ID
-    const telegramAPI = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            // Telegram API URL va bot token
+            const botToken = '7689971716:AAEbnYS5N70XCfVBRZLw-Hns3ge7mSyWTvw'; // Replace with actual bot token
+            const chatID = '7273776529'; // Replace with actual chat ID
+            const telegramAPI = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-    // Yuboriladigan xabarni tayyorlash
-    let message = `New Registration Details:
-    Name: ${formData.name}
-    Surname: ${formData.surname}
-    Family Name: ${formData.familyName}
-    Passport: ${formData.passport}
-    Phone: ${formData.phone}
-    Region: ${formData.region}
-    Exam Date: ${formData.examDate}
-    Details: ${formData.details}`;
+            // Yuboriladigan xabarni tayyorlash
+            let message = `New Registration Details:
+            Name: ${formData.name}
+            Surname: ${formData.surname}
+            Family Name: ${formData.familyName}
+            Passport: ${formData.passport}
+            Phone: ${formData.phone}
+            Region: ${formData.region}
+            Exam Date: ${formData.examDate}
+            Details: ${formData.details}`;
 
-    // Telegram botga ma'lumot yuborish
-    try {
-        const response = await fetch(telegramAPI, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                chat_id: chatID,
-                text: message
-            })
-        });
+            // Telegram botga ma'lumot yuborish
+            try {
+                const response = await fetch(telegramAPI, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatID,
+                        text: message
+                    })
+                });
 
-        if (response.ok) {
-            alert("Your data has been sent successfully to Telegram!");
+                if (response.ok) {
+                    alert("Your data has been sent successfully to Telegram!");
 
-            // Redirect to payment.html after success
-            window.location.href = "payment.html";  // Adjust to your desired page
-        } else {
-            alert("There was an error sending the data to Telegram.");
+                    // Redirect to payment.html after success
+                    window.location.href = "payment.html";  // Adjust to your desired page
+                } else {
+                    alert("There was an error sending the data to Telegram.");
+                }
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+
+            // PDF yaratish va yuklash (ixtiyoriy)
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("Registration Details", 20, 20);
+            doc.text(`Name: ${formData.name}`, 20, 30);
+            doc.text(`Surname: ${formData.surname}`, 20, 40);
+            doc.text(`Family Name: ${formData.familyName}`, 20, 50);
+            doc.text(`Passport: ${formData.passport}`, 20, 60);
+            doc.text(`Phone: ${formData.phone}`, 20, 70);
+            doc.text(`Region: ${formData.region}`, 20, 80);
+            doc.text(`Exam Date: ${formData.examDate}`, 20, 90);
+            doc.text(`Details: ${formData.details}`, 20, 100);
+
+            // Image qo'shish
+            if (formData.photo) {
+                const img = new Image();
+                img.src = formData.photo;
+                img.onload = function() {
+                    doc.addImage(img, 'JPEG', 20, 110, 60, 80);
+                    doc.save("registration-details.pdf");
+                };
+            } else {
+                doc.save("registration-details.pdf");
+            }
         }
-    } catch (error) {
-        alert("Error: " + error.message);
-    }
-
-    // PDF yaratish va yuklash (ixtiyoriy)
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.text("Registration Details", 20, 20);
-    doc.text(`Name: ${formData.name}`, 20, 30);
-    doc.text(`Surname: ${formData.surname}`, 20, 40);
-    doc.text(`Family Name: ${formData.familyName}`, 20, 50);
-    doc.text(`Passport: ${formData.passport}`, 20, 60);
-    doc.text(`Phone: ${formData.phone}`, 20, 70);
-    doc.text(`Region: ${formData.region}`, 20, 80);
-    doc.text(`Exam Date: ${formData.examDate}`, 20, 90);
-    doc.text(`Details: ${formData.details}`, 20, 100);
-
-    // Image qo'shish
-    if (formData.photo) {
-        const img = new Image();
-        img.src = formData.photo;
-        img.onload = function() {
-            doc.addImage(img, 'JPEG', 20, 110, 60, 80);
-            doc.save("{formData.passport}.pdf");
-        };
-    } else {
-        doc.save({formData.passport}.pdf");
-    }
-}
+    </script>
+</body>
+</html>
