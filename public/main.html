@@ -66,23 +66,25 @@
                     border-radius: 5px;
                 }
 
-        /* Main container */
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin: 20px;
-            position: relative;
-            z-index: 2;
-        }
+            /* Main container */
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* O'zgartirildi */
+                margin: 20px;
+                position: relative;
+                z-index: 2;
+            }
+            
+            /* Items layout */
+            .items {
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* O'zgartirildi */
+                width: 100%; /* To'liq kenglikka moslashadi */
+                max-width: 700px; /* Juda keng bo'lishining oldini oladi */
+}
 
-        /* Items layout */
-        .items {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: 90%;
-            max-width: 500px;
         }
 
         .item {
