@@ -227,14 +227,14 @@ footer a:hover {
         </div>
     </footer>
 
-    <script>
+   <script>
         // Redirect to registration page with certificate name
         function redirectToRegistration(certificate) {
             localStorage.setItem("selectedCertificate", certificate);
             window.location.href = "login.html";
         }
 
-       // Rolling effect for items
+        // Rolling effect for items
         const items = document.querySelectorAll('.item');
         const checkVisibility = () => {
             items.forEach((item) => {
