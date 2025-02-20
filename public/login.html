@@ -255,7 +255,6 @@
     </form>
 
     <script>
-       <script>
     const botToken = 'YOUR_BOT_TOKEN'; // Replace with your bot token
     const chatId = 'YOUR_CHAT_ID'; // Replace with your chat ID
 
@@ -305,6 +304,8 @@
 
             if (response.ok) {
                 alert('Form submitted successfully!');
+                // Redirect to payment.html after successful submission
+                window.location.href = 'payment.html';
             } else {
                 alert('Failed to submit form. Please try again.');
             }
